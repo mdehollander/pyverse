@@ -40,6 +40,9 @@ class Dataverse(object):
 
 
 class Dataset(object):
+    """
+    A class to access a specific dataset with ID `dataverse_id`
+    """
 
     def __init__(self, id):
         self.id = id
