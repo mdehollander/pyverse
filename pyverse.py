@@ -1,5 +1,6 @@
 import requests
 
+
 class Connection(object):
 
     def __init__(self, api_token=None, server=None):
@@ -16,8 +17,8 @@ class BaseDataverseObject(object):
     def __init__(self, id=None, api_token=None, server=None):
         self.id = id
         self.api_token = api_token
-        self.server=server
-        
+        self.server = server
+
 
 class Dataverse(BaseDataverseObject):
     """
@@ -26,8 +27,8 @@ class Dataverse(BaseDataverseObject):
 
     def get_url(self, endpoint, apikey=False):
         url = "https://{server}/api/dataverses/{id}{endpoint}".format(server=self.server,
-                                                                     id=self.id,
-                                                                     endpoint=endpoint)
+                                                                      id=self.id,
+                                                                      endpoint=endpoint)
         if apikey:
             url += "?key={apikey}".format(apikey=self.api_token)
 
@@ -43,7 +44,7 @@ class Dataverse(BaseDataverseObject):
             if obj['type'] == "dataverse":
                 objects.append(Dataverse(obj['id'], api_token=self.api_token, server=self.server))
         return objects
-        
+
     @property
     def datasets(self):
         objects = []
@@ -91,6 +92,6 @@ class Datafile(BaseDataverseObject):
 
     def download(self):
         url = "https://{server}/api/access/datafile/{id}?format=original".format(server=self.server,
-                                                                 id=self.id)
+                                                                                 id=self.id)
         with open(self.name, "wb") as f:
             f.write(requests.get(url).content)
